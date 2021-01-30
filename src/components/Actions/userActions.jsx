@@ -1,8 +1,10 @@
 import * as actionTypes from "./actionTypes";
 
-export const loginUser = () => {
+export const loginUser = (token) => {
+    console.log("--", token);
     return {
-        type: actionTypes.LOG_IN
+        type: actionTypes.LOG_IN,
+        token: token
     };
 };
 

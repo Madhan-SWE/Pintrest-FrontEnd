@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 function Home(props) {
     console.log(props.user)
-    if (! props.user){
+    if (! props.user.state){
         return (
             <Redirect to="/login" />
             
