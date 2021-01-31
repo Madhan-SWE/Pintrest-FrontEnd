@@ -10,14 +10,19 @@ import ActivateUser from "./components/User/ActivateUser";
 import ForgotPassword from './components/User/ForgotPassword';
 import ChangePassword from './components/User/ChangePassword';
 
+import CreateBoard from "./components/Operations/CreateBoard"
 
 function App() {
+
+  function requireAuth(nextState, replace, next){
+    next();
+  }
   return (
       <div className="App container-fluid">
       <Header />
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/" onEnter={requireAuth}>
               <Home />
           </Route>
           <Route exact path="/login">
@@ -31,6 +36,9 @@ function App() {
           </Route>
           <Route exact path="/activateuser/:token" render={(props) => <ActivateUser {...props} />} />
           <Route exact path="/changePassword/email/:email/token/:token" render={(props) => <ChangePassword {...props} />} />
+          <Route exact path="/createBoard">
+            <CreateBoard />
+          </Route>
           </Switch>
         </Router>
       </div>

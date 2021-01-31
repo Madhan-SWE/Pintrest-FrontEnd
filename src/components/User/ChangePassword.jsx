@@ -5,7 +5,6 @@ function ChangePassword(props) {
     const email = props.match.params.email;
     console.log(props.match.params);
 
-
     var backEndURL = "http://127.0.0.1:3502";
     const [state, setState] = useState({
         password: "",
@@ -14,17 +13,17 @@ function ChangePassword(props) {
 
     const [showForm, setShowForm] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         const payload = {
-            token: token
-        }
+            token: token,
+        };
 
         fetch(backEndURL + "/users/passwordReset/" + email, {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+            },
         })
             .then((res) => res.json())
             .then((res) => {
@@ -36,9 +35,9 @@ function ChangePassword(props) {
                     });
                     setAlertState({
                         message: "URL Validation successful!",
-                        state: true
-                    })
-                    setShowForm(true)
+                        state: true,
+                    });
+                    setShowForm(true);
                 } else {
                     console.log("Res:");
                     setAlertState({
@@ -48,9 +47,7 @@ function ChangePassword(props) {
                     });
                 }
             });
-
     }, []);
-    
 
     const [alertState, setAlertState] = useState({
         message: "Validating URL....",
@@ -71,80 +68,71 @@ function ChangePassword(props) {
     }
 
     function handleOnSubmit() {
-        const payload = { password: state.password}
-        if(state.password!==state.cpassword)
-        {
+        const payload = { password: state.password };
+        if (state.password !== state.cpassword) {
             setAlertState({
                 ...alertState,
                 message: "Passwords Don't match",
-                state: false
-            })
-
-        }
-        else{
-            
+                state: false,
+            });
+        } else {
             fetch(backEndURL + "/users/changePassword/" + email, {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
-                    "Content-Type": "application/json"
-                }
+                    "Content-Type": "application/json",
+                },
             })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result) {
-                    setAlertState({
-                        ...alertState,
-                        state: true,
-                        message: res.status + " " + res.message,
-                    });
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.result) {
+                        setAlertState({
+                            ...alertState,
+                            state: true,
+                            message: res.status + " " + res.message,
+                        });
 
-                    setTimeout(goHome, 3000);
-                } else {
-                    console.log("Res:");
-                    setAlertState({
-                        ...alertState,
-                        state: false,
-                        message: res.message,
-                    });
-                }
-            });
+                        setTimeout(goHome, 3000);
+                    } else {
+                        console.log("Res:");
+                        setAlertState({
+                            ...alertState,
+                            state: false,
+                            message: res.message,
+                        });
+                    }
+                });
         }
         console.log(payload);
-
-        
     }
 
-    function goRegisterPage(){
+    function goRegisterPage() {
         setRedirect({
             ...redirect,
             state: !redirect.state,
-            url: "/Register"
-        })
+            url: "/Register",
+        });
     }
 
-    function goLoginPage(){
+    function goLoginPage() {
         setRedirect({
             ...redirect,
             state: true,
-            url: "/login"
-        })
+            url: "/login",
+        });
     }
 
-    function goHome(){
-        console.log("Go home")
+    function goHome() {
+        console.log("Go home");
         setRedirect({
             ...redirect,
             state: true,
-            url: "/"
-        })
+            url: "/",
+        });
     }
 
-    if(redirect.state)
-    {
-        return (
-            <Redirect to={redirect.url} />
-        )
+    if (redirect.state) {
+        return <Redirect to={redirect.url} />;
     }
 
     if (!showForm) {

@@ -1,10 +1,11 @@
 import * as actionTypes from "./actionTypes";
 
-export const loginUser = (token) => {
+export const loginUser = (token, email) => {
     console.log("--", token);
     return {
         type: actionTypes.LOG_IN,
-        token: token
+        token: token,
+        email: email
     };
 };
 

@@ -49,7 +49,7 @@ function Login(props) {
             {
                 console.log(" - - User Login successfull !");
                 console.log(props.user.state)
-                props.loginUser(res.token)
+                props.loginUser(res.token, state.email)
                 setAlertState({
                     ...alertState,
                     state: true,
@@ -108,7 +108,7 @@ function Login(props) {
         sessionStorage.setItem("jwt-token", props.user.token)
         setTimeout(goHome, 1000);
     }
-
+    
     return (
         <div className="col-md-6 offset-md-3 text-center">
             <h1> Login </h1>
@@ -157,7 +157,7 @@ export default connect(
     },
     (dispatch) => {
         return {
-            loginUser: (token) => dispatch(userActions.loginUser(token))
+            loginUser: (token, email) => dispatch(userActions.loginUser(token, email))
         };
     }
 )(Login);
